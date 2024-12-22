@@ -3,6 +3,7 @@ package com.game.social.discovery.game_management.DTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -29,5 +30,7 @@ public class GameDTO {
     private List<TagDTO> tags;
     // Getters and setters
     private List<Screenshot> screenshots;
+    private Long likes;
+    private BigDecimal rating;
 }
 
