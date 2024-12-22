@@ -1,6 +1,7 @@
 package com.game.social.discovery.game_management.Controller;
 
 import ch.qos.logback.core.util.StringUtil;
+import com.game.social.discovery.game_management.DTO.GameDTO;
 import com.game.social.discovery.game_management.DTO.GameResponseDTO;
 import com.game.social.discovery.game_management.Service.GameCacheService;
 import com.game.social.discovery.game_management.Service.GameService;
@@ -39,6 +40,12 @@ public class GameController {
     public ResponseEntity<?> getSpecificGameData(@PathVariable("id")String id){
         //Step 1: Find whether the game exists in our cache db
         //Step 2: If the game does not exist in our cache db, then we need to hit the RAWG API
-
+        GameDTO gameDTO = gameCacheService.getGameDetailsFromCache(id);
+        if(gameDTO!= null){
+            return new ResponseEntity<>(gameDTO,HttpStatus.OK);
+        }
+        else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

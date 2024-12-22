@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameCacheService {
@@ -34,8 +35,8 @@ public class GameCacheService {
     private BigDecimal avgRating;
 
     public GameDTO getGameDetailsFromCache(String id){
-        GameData gameData = gameCacheRepository.getGameFromId(id);
-        if(ObjectUtils.isEmpty(gameData)){
+        Optional<GameData> gameData = gameCacheRepository.findById(id);
+        if(!gameData.isPresent()){
             likeCount = 0L;
             avgRating = BigDecimal.valueOf(0.0);
             //get Data from the RAWG API
@@ -48,7 +49,7 @@ public class GameCacheService {
         else{
             likeCount = likeService.getLikesForGameId(id);
             avgRating = ratingService.calculateAverageRatingForGameId(id);
-            convertGameDataToResponoseData(gameData,likeCount,avgRating);
+            convertGameDataToResponoseData(gameData.get(),likeCount,avgRating);
         }
 
         return gameDTO;
