@@ -67,8 +67,8 @@ public class GameService {
                 List<Screenshot> screenshots = new ArrayList<>();
                 JsonNode screenshotNode = result.path("short_screenshots");
                 for(JsonNode screenshot: screenshotNode){
-                    String id = screenshotNode.path("id").asText();
-                    String uri = screenshotNode.path("image").asText();
+                    String id = screenshot.path("id").asText();
+                    String uri = screenshot.path("image").asText();
                     Screenshot screenshotDTO = new Screenshot();
                     screenshotDTO.setId(id);
                     screenshotDTO.setImageURI(uri);

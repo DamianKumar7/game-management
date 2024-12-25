@@ -15,10 +15,10 @@ public class GameData {
     @Id
     private String id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String slug;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String name;
 
     private String released;

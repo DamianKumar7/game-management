@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=build /app/target/game-management-0.0.1-SNAPSHOT.jar /app/game-management.jar
 
 # Expose the port on which the application will run
-EXPOSE 8080
+EXPOSE 8080 5005
 
 # Command to run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "/app/game-management.jar"]
+ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/app/game-management.jar"]

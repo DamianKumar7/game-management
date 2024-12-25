@@ -24,10 +24,7 @@ public class Likes {
     private String gameId; // The ID of the game being rated (foreign key to a Game entity)
 
     @Column(nullable = false)
-    private Long userId; // The ID of the user who gave the rating (optional, if you track users)
-
-    @Column(nullable = false)
-    private String username; // Optional: username of the person giving the rating (if you want to store it)
+    private String userId; // The ID of the user who gave the rating (optional, if you track users)
 
     @Column(nullable = false)
     private Long timestamp;
