@@ -6,12 +6,15 @@ import com.game.social.discovery.game_management.DTO.GameResponseDTO;
 import com.game.social.discovery.game_management.Service.GameCacheService;
 import com.game.social.discovery.game_management.Service.GameService;
 import com.game.social.discovery.game_management.Service.LikeService;
+import com.game.social.discovery.game_management.Service.RatingService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/games")
@@ -25,6 +28,9 @@ public class GameController {
 
     @Autowired
     LikeService likeService;
+
+    @Autowired
+    RatingService ratingService;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllGames(@RequestParam("pageId")String pageId, @RequestParam(name = "search", required = false )String searchKeyword, @RequestParam(value = "genre", required = false)String genre){
@@ -61,6 +67,16 @@ public class GameController {
             return ResponseEntity.ok("Game liked successfully!");
         }else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to like the game. Please try again later.");
+        }
+    }
+
+    @PostMapping("rate/{id}")
+    public ResponseEntity<?> rateGame(@PathVariable(name = "id")String gameId, @RequestParam(name = "userId") String userId, @RequestParam(name = "rating")BigDecimal rating){
+        int success = ratingService.rateGame(gameId,userId,rating);
+        if (success == 1) {
+            return ResponseEntity.ok("Game rated successfully!");
+        }else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to rate the game. Please try again later.");
         }
     }
 }

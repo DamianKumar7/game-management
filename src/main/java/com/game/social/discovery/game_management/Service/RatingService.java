@@ -1,5 +1,6 @@
 package com.game.social.discovery.game_management.Service;
 
+import com.game.social.discovery.game_management.Model.Rating;
 import com.game.social.discovery.game_management.Repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,21 @@ public class RatingService {
 
         // Calculate the average
         return sumOfRatings.divide(BigDecimal.valueOf(totalRatings), 2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public Integer rateGame(String gameId, String userId,BigDecimal ratingValue) {
+        Rating rating = new Rating();
+        rating.setGameId(gameId);
+        rating.setTimestamp(System.currentTimeMillis());
+        rating.setUserId(userId);
+        rating.setRating(ratingValue);
+        int success = 0;
+        try{
+            ratingRepository.save(rating);
+            success = 1;
+        } catch (Exception e) {
+            success = -1;
+        }
+        return success;
     }
 }

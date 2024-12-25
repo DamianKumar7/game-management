@@ -26,9 +26,9 @@ public class Rating {
     private BigDecimal rating; // The rating given (assumed to be a decimal value)
 
     @Column(nullable = false)
-    private Long userId; // The ID of the user who gave the rating (optional, if you track users)
+    private String userId; // The ID of the user who gave the rating (optional, if you track users)
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String username; // Optional: username of the person giving the rating (if you want to store it)
 
     @Column(nullable = false)
