@@ -4,6 +4,8 @@ import com.game.social.discovery.game_management.Model.Likes;
 import com.game.social.discovery.game_management.Repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LikeService {
@@ -16,6 +18,7 @@ public class LikeService {
         return likeCount;
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer likeGame(String id, String userId) {
         Likes like = new Likes();
         like.setGameId(id);

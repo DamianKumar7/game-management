@@ -4,6 +4,8 @@ import com.game.social.discovery.game_management.Model.Rating;
 import com.game.social.discovery.game_management.Repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -29,6 +31,7 @@ public class RatingService {
         return sumOfRatings.divide(BigDecimal.valueOf(totalRatings), 2, BigDecimal.ROUND_HALF_UP);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer rateGame(String gameId, String userId,BigDecimal ratingValue) {
         Rating rating = new Rating();
         rating.setGameId(gameId);
